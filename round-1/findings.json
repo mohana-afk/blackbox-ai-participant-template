@@ -1,17 +1,118 @@
 {
   "round": "round-1",
-  "team": "BB-XXX",
-  "queries_used": 0,
+  "team": "BB-019",
+  "queries_used": 63,
   "claims": [
     {
       "type": "feature_effect",
-      "feature": "x1",
+      "feature": "months_active",
+      "direction": "decreases",
+      "strength": "strong",
+      "confidence": 0.95,
+      "evidence": {
+        "query_ids": ["45", "46", "48", "51", "53", "54", "55"],
+        "summary": "The highest observed score in Round 1 was 0.9890 and occurred with months_active = 0 in the corresponding optimized configuration. Increasing months_active to 1 reduced the score to 0.9862, while increasing it to 40 reduced the score further. This indicates a strong preference for the low end of the tested months_active range."
+      },
+      "direction": "decreases"
+    },
+    {
+      "type": "feature_effect",
+      "feature": "trust_score",
+      "direction": "decreases",
+      "strength": "strong",
+      "confidence": 0.95,
+      "evidence": {
+        "query_ids": ["1", "2", "16"],
+        "summary": "At the baseline configuration, trust_score = 600 produced 0.5346, while trust_score = 900 produced 0.4314. In a later optimized configuration, reducing trust_score to 300 increased the score to 0.8411. Thus, higher trust_score produced a lower score in the tested region."
+      }
+    },
+    {
+      "type": "feature_effect",
+      "feature": "utilisation",
       "direction": "increases",
       "strength": "strong",
-      "confidence": 0.0,
+      "confidence": 0.93,
       "evidence": {
-        "query_ids": [],
-        "summary": "Replace this example claim with your own. Every claim needs evidence."
+        "query_ids": ["16", "20"],
+        "summary": "In the optimized configuration, changing utilisation from 0.5 to 1.0 increased the score from 0.8411 to 0.9345. Later testing around the upper boundary showed that utilisation values of 0.98 and 0.99 produced the same 0.9890 result in the optimized region."
+      }
+    },
+    {
+      "type": "feature_effect",
+      "feature": "recent_chargebacks",
+      "direction": "non_monotonic",
+      "strength": "strong",
+      "confidence": 0.95,
+      "evidence": {
+        "query_ids": ["33", "34", "35", "36"],
+        "summary": "At a later optimized configuration, recent_chargebacks = 0 produced 0.9554, = 1 produced 0.9676, = 2 produced 0.9477, and = 1 again produced 0.9676. Earlier testing with recent_chargebacks = 5 produced 0.6790. The results demonstrate a non-monotonic relationship, with 1 outperforming both 0 and 2 in the tested region."
+      }
+    },
+    {
+      "type": "feature_effect",
+      "feature": "channel",
+      "direction": "none",
+      "strength": "strong",
+      "confidence": 0.97,
+      "evidence": {
+        "query_ids": ["45", "47", "49", "50"],
+        "summary": "With the other tested inputs held constant, channel D produced 0.9890, compared with channel C at 0.9858, channel B at 0.9864, and channel A at 0.9829. Channel D therefore produced the highest score among the four tested categorical channels in this configuration."
+      },
+      "category": "D"
+    },
+    {
+      "type": "feature_effect",
+      "feature": "account_age_days",
+      "direction": "increases",
+      "strength": "strong",
+      "confidence": 0.94,
+      "evidence": {
+        "query_ids": ["28", "29", "45", "52", "57", "58", "59"],
+        "summary": "Account age showed a strong positive effect toward the upper end of the tested range. At the same later configuration, age 60 produced 0.9796, age 72 produced 0.9877, age 73 produced 0.9884, and age 74 and 75 produced 0.9890. Earlier tests also showed age 18 producing a substantially lower score of 0.7211."
+      }
+    },
+    {
+      "type": "feature_effect",
+      "feature": "account_balance",
+      "direction": "increases",
+      "strength": "strong",
+      "confidence": 0.91,
+      "evidence": {
+        "query_ids": ["7", "8", "11", "30", "60"],
+        "summary": "Increasing account balance from 50 to 70 to 90 to 100 increased the score from 0.7064 to 0.7204 to 0.7266 in the early experiments. Reducing balance to 0 later produced 0.9110, while balance values of 98 and 99 produced the same optimized score of 0.9890 as 100 in the later region."
+      }
+    },
+    {
+      "type": "ignored_feature",
+      "feature": "amount",
+      "direction": "none",
+      "strength": "weak",
+      "confidence": 0.86,
+      "evidence": {
+        "query_ids": ["31", "32", "56", "59"],
+        "summary": "Amount showed no meaningful effect in the later optimized region. Amount values of 0 and 50 both produced 0.9459 in the earlier configuration, and amount values of 100 and 50 both produced 0.9890 in the later optimized configuration. This suggests amount is locally inactive in the tested region, but does not prove it is globally ignored."
+      }
+    },
+    {
+      "type": "ignored_feature",
+      "feature": "beneficiaries",
+      "direction": "none",
+      "strength": "weak",
+      "confidence": 0.82,
+      "evidence": {
+        "query_ids": ["8", "9", "10", "21", "22", "45"],
+        "summary": "Changing beneficiaries produced no observable score change in several tested configurations. For example, queries 8 and 9 both produced 0.7204 despite beneficiaries changing from 3 to 6, and later optimized queries remained at 0.9890 across tested beneficiary values. This suggests a weak or locally inactive effect rather than proving the feature is globally ignored."
+      }
+    },
+    {
+      "type": "ignored_feature",
+      "feature": "linked_cards",
+      "direction": "none",
+      "strength": "weak",
+      "confidence": 0.8,
+      "evidence": {
+        "query_ids": ["10", "11", "45", "46", "48", "51"],
+        "summary": "Changing linked_cards in the tested configurations did not produce a meaningful score change. In particular, the later 0.9890 region remained stable across repeated queries with the same optimized setup. This suggests that linked_cards is locally inactive in the explored region, but does not prove that it is globally ignored."
       }
     }
   ]
